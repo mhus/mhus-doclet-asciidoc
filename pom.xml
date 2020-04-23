@@ -14,8 +14,7 @@
         <version>7</version>
     </parent>
 
-    <url>http://asciidoctor.org</url>
-    <description>Asciidoclet is a Javadoc Doclet that allows you to write Javadoc using the AsciiDoc format.</description>
+    <description>The doclet let you export asciidoc formated comments</description>
 
     <licenses>
         <license>
@@ -24,25 +23,11 @@
         </license>
     </licenses>
 
-    <scm>
-        <url>http://github.com/asciidoctor/asciidoclet</url>
-        <connection>scm:git:git@github.com:asciidoctor/asciidoclet.git</connection>
-        <developerConnection>scm:git:git@github.com:asciidoctor/asciidoclet.git</developerConnection>
-    </scm>
-
     <dependencies>
-    <!-- 
         <dependency>
             <groupId>org.asciidoctor</groupId>
             <artifactId>asciidoctorj</artifactId>
             <version>1.5.8.1</version>
-        </dependency>
-     -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
 
@@ -125,7 +110,7 @@
                 <configuration>
                     <javadocExecutable>${java.home}/bin/javadoc</javadocExecutable>
                     <source>11</source>
-                    <doclet>de.mhus.mvn.plugin.TestDoclet</doclet>
+                    <doclet>de.mhus.mvn.plugin.ExportDoclet</doclet>
                     <docletArtifact>
                         <groupId>${project.groupId}</groupId>
                         <artifactId>${project.artifactId}</artifactId>

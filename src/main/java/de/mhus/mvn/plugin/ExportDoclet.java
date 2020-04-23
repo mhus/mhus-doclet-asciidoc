@@ -2,8 +2,6 @@ package de.mhus.mvn.plugin;
 
 import java.io.PrintStream;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
@@ -19,39 +17,35 @@ import jdk.javadoc.doclet.Doclet;
 import jdk.javadoc.doclet.DocletEnvironment;
 import jdk.javadoc.doclet.Reporter;
 
-public class TestDoclet implements Doclet {
+public class ExportDoclet implements Doclet {
 
-	private DocletEnvironment env;
 	private DocTrees treeUtils;
+    private XOptions options;
+    private DocRenderer renderer;
 
 	@Override
 	public void init(Locale locale, Reporter reporter) {
-		System.out.println("INIT");
+        options = new XOptions();
+        options.add(new XOption("bottom", 1, "Specifies the text to be placed at the bottom of each output file."));
+        options.add(new XOption("charset", 1, "Specifies the HTML character set for this document."));
+        options.add(new XOption("d", 1, "Specifies the destination directory where javadoc saves the generated HTML files."));
+        options.add(new XOption("docencoding", 1, "Specifies the encoding of the generated HTML files."));
+        options.add(new XOption("doctitle", 1, "Specifies the title to be placed near the top of the overview summary file."));
+        options.add(new XOption("use", 1, "Includes one \"Use\" page for each documented class and package."));
+        options.add(new XOption("windowtitle", 1, "Specifies the title to be placed in the HTML <title> tag."));
+        options.add(new XOption("version", 0, "Adds a \"Version\" subheading with the specified version-text to the generated docs when the -version option is used."));
+        options.add(new XOption("author", 0, "Adds an \"Author\" entry with the specified name-text to the generated docs when the -author option is used."));
+		
 	}
 
 	@Override
 	public String getName() {
-		return "TestDoclet";
+		return "Export AsciiDoc Doclet";
 	}
 
 	@Override
 	public Set<? extends Option> getSupportedOptions() {
-        Set<Option> options = new HashSet<>();
-        options.add(new XOption("-bottom,-charset,-d,-docencoding,-doctitle,-use,-windowtitle",1,"") {
-			@Override
-			public boolean process(String option, List<String> arguments) {
-				System.out.println("Option: " + option + "=" + arguments);
-				return true;
-			}
-        });
-        options.add(new XOption("-version,-author",0,"") {
-			@Override
-			public boolean process(String option, List<String> arguments) {
-				System.out.println("Option: " + option + "=" + arguments);
-				return true;
-			}
-        });
-        return options;
+        return options.getOptions();
 	}
 
 	@Override
@@ -62,10 +56,12 @@ public class TestDoclet implements Doclet {
 	@Override
 	public boolean run(DocletEnvironment environment) {
 		System.out.println("RUN");
-		env = environment;
 		treeUtils = environment.getDocTrees();
+		
+		renderer = new DocRenderer(options);
+		
 		dump("",environment.getSpecifiedElements());
-		env = null;
+		renderer = null;
 		return true;
 	}
 

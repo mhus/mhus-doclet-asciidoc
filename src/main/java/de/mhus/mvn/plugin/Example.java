@@ -6,7 +6,7 @@ import javax.annotation.processing.SupportedOptions;
  * Before Class.
  * 
  * @category category
- * @see TestDocklet
+ * @see de.mhus.mvn.plugin.ExportDoclet
  * @author mikehummel
  *
  */
@@ -14,6 +14,10 @@ import javax.annotation.processing.SupportedOptions;
 public class Example {
 
 	/**
+	 * = Headline
+	 * 
+	 * Some Text
+	 * 
 	 * This is a Parameter {@link java.lang.String}.
 	 */
 	public String parameter;
